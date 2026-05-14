@@ -1,0 +1,13 @@
+
+ALTER PROCEDURE [dbo].[sp_GetAdressTofilterCart]
+(
+    @CreatedBy NVARCHAR(50)
+)
+AS
+	BEGIN
+		SELECT distinct [Address] + ' | ' + CartId as [AddressText], [Address] FROM tbl_RenewalInspection 
+		where CreatedBy=@CreatedBy AND Status='1' 
+		AND (NewInspectionId is NULL OR NewInspectionId NOT IN (Select Id From tbl_Inspection Where ApplicationStatus='Return' and CreatedBy=@CreatedBy))
+	END
+
+
